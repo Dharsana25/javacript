@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promise Example</title>
+</head>
+<body>
+
+<script>
+  const cart = ["shoe", "hat"];
+
+  // Start the process
+  createOrder(cart)
+    .then(function(orderId) {
+      console.log("✅ Order Created:", orderId);
+      return proceedToPayment(orderId);
+    })
+    .then(function(paymentInfo) {
+      console.log("💳 Payment Status:", paymentInfo);
+      return showOrderSummary(paymentInfo);
+    })
+    .then(function(summary) {
+      console.log("📦 Order Summary:", summary);
+      return updateWallet(summary);
+    })
+    .then(function(walletStatus) {
+      console.log("💰 Wallet Updated:", walletStatus);
+    })
+    .catch(function(err) {
+      console.error("❌ Error:", err.message);
+    });
+
+  // Create order
+  function createOrder(cart) {
+    return new Promise(function(resolve, reject) {
+      if (!validateCart(cart)) {
+        reject(new Error("Cart is not valid"));
+        return;
+      }
+
+      const orderId = "1234";
+      setTimeout(() => resolve(orderId), 1000); // Simulate async
+    });
+  }
+
+  // Proceed to payment
+  function proceedToPayment(orderId) {
+    return new Promise(function(resolve) {
+      setTimeout(() => resolve("Payment successful for order " + orderId), 1000);
+    });
+  }
+
+  // Show order summary
+  function showOrderSummary(paymentInfo) {
+    return new Promise(function(resolve) {
+      setTimeout(() => resolve("Summary based on: " + paymentInfo), 1000);
+    });
+  }
+
+  // Update wallet
+  function updateWallet(summary) {
+    return new Promise(function(resolve) {
+      setTimeout(() => resolve("Wallet updated after: " + summary), 1000);
+    });
+  }
+
+  // Cart validation
+  function validateCart(cart) {
+    return cart.length > 0;
+  }
+</script>
+
+</body>
+</html>

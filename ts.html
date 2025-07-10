@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Example</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+
+    #myform {
+      background-color: whitesmoke;
+      padding: 20px;
+      border-radius: 10px;
+      color: white;
+      width: 300px;
+      font-family: Arial, sans-serif;
+    }
+
+    input {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px;
+      background-color: #00b894;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    div {
+      font-size: 13px;
+      color: red;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <script>
+    function createForm() {
+      const form = document.createElement("form");
+      form.id = "myform";
+
+      const name = document.createElement("input");
+      name.type = "text";
+      name.placeholder = "Enter your name";
+      name.id = "name";
+      form.appendChild(name);
+
+      const nameError = document.createElement("div");
+      form.appendChild(nameError);
+
+
+      const email = document.createElement("input");
+      email.type = "text";
+      email.placeholder = "Enter your email";
+      email.id = "email";
+      form.appendChild(email);
+
+      const emailError = document.createElement("div");
+      form.appendChild(emailError);
+
+
+      const password = document.createElement("input");
+      password.type = "password";
+      password.placeholder = "Enter your password";
+      password.id = "password";
+      form.appendChild(password);
+
+      const passwordError = document.createElement("div");
+      form.appendChild(passwordError);
+
+
+      const submit = document.createElement("button");
+      submit.type = "submit";
+      submit.textContent = "Submit";
+      form.appendChild(submit);
+
+      document.body.appendChild(form);
+
+      // Form submit handler
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        // Clear previous errors
+        nameError.textContent = "";
+        emailError.textContent = "";
+        passwordError.textContent = "";
+
+        let isValid = true;
+
+        if (name.value.trim() === "") {
+          nameError.textContent = "Name is required";
+          isValid = false;
+        }
+
+        if (email.value.trim() === "" || !email.value.includes("@")) {
+          emailError.textContent = "Enter a valid email address";
+          isValid = false;
+        }
+
+        if (password.value.trim().length < 6) {
+          passwordError.textContent = "Password must be at least 6 characters";
+          isValid = false;
+        }
+
+        if (isValid) {
+          alert("Form submitted successfully!");
+        }
+      });
+    }
+
+    createForm();
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Document</title>
+  <style>
+    body {
+      background-color: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background-color: white;
+      padding: 30px 40px;
+      width: 300px;
+      text-align: center;
+      justify-content: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007BFF;
+      color: white;
+      margin-top: 10px;
+    }
+
+    .error-msg {
+      color: red;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="form"></div>
+
+  <script>
+    const container = document.getElementById("form");
+
+    const heading = document.createElement("h1");
+    heading.textContent = "User Login";
+    container.appendChild(heading);
+
+    const inputRef = {};
+    const errorRef = {};
+
+    function createInput(id, placeholder, type) {
+      const input = document.createElement("input");
+      input.id = id;
+      input.placeholder = placeholder;
+      input.type = type;
+      container.appendChild(input);
+      inputRef[id] = input;
+
+      const error = document.createElement("p");
+      error.className = "error-msg";
+      error.id = id + "Error";
+      container.appendChild(error);
+      errorRef[id] = error;
+    }
+
+    createInput("firstName", "Enter your first name", "text");
+    createInput("lastName", "Enter your last name", "text");
+    createInput("email", "Enter your email", "email");
+    createInput("password", "Enter your password", "password");
+
+    const btn = document.createElement("button");
+    btn.textContent = "Submit";
+    btn.id = "btn";
+    container.appendChild(btn);
+
+    btn.addEventListener("click", function () {
+      const firstName = inputRef.firstName.value.trim();
+      const lastName = inputRef.lastName.value.trim();
+      const email = inputRef.email.value.trim();
+      const password = inputRef.password.value.trim();
+
+      Object.values(errorRef).forEach(error => error.textContent = "");
+
+      let hasError = false;
+
+      const rules = [
+        {
+          field: "firstName",
+          condition: firstName === "",
+          message: "First name is required"
+        },
+        {
+          field: "firstName",
+          condition:  firstName.length < 3,
+          message: "First name must be at least 3 characters"
+        },
+        {
+          field: "lastName",
+          condition: lastName === "",
+          message: "Last name is required"
+        },
+        {
+          field: "email",
+          condition: email === "",
+          message: "Email is required"
+        },
+        {
+          field: "email",
+          condition: email !== "" && !email.includes("@"),
+          message: "Enter a valid email"
+        },
+        {
+          field: "password",
+          condition: password .length<6,
+          message: "Password is required"
+        }
+      ];
+
+      rules.forEach(rule => {
+        if (rule.condition) {
+          errorRef[rule.field].textContent = rule.message;
+          hasError = true;
+        }
+      });
+
+      if (!hasError) {
+        alert("Form submitted successfully!");
+        Object.values(inputRef).forEach(input => input.value = "");
+      }
+    });
+  </script>
+</body>
+</html>

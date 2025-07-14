@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="text" placeholder="enter a sentence">
+    <button onclick="reverseLetters()">reverse</button>
+    <p id="sentence"></p>
+    <script>
+function reverseLetters(){
+    const str= document.getElementById("text").value;
+    
+    const reversed = str.split("")
+                       . reverse()
+                       .join("");
+
+    document.getElementById("sentence").textContent=reversed;
+}
+    </script>
+</body>
+</html>
